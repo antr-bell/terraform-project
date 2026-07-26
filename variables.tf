@@ -17,6 +17,6 @@ variable "vpc_cidr" {
 }
 variable "alert_email" {
   description = "Email address for billing and security alerts"
-  type        = "string"
+  type        = string
   sensitive   = true
 }

@@ -1,9 +1,9 @@
 resource "aws_budgets_budget" "monthly_free_tier_sim" {
-  name              = "monthly-zero-spend-budget"
-  budget_type       = "COST"
-  limit_amount      = "0.01" # Simulates zero-spend / Free Tier boundary
-  limit_unit        = "USD"
-  time_unit         = "MONTHLY"
+  name         = "monthly-zero-spend-budget"
+  budget_type  = "COST"
+  limit_amount = "0.01" # Simulates zero-spend / Free Tier boundary
+  limit_unit   = "USD"
+  time_unit    = "MONTHLY"
 
   notification {
     comparison_operator        = "GREATER_THAN"
