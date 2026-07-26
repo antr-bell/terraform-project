@@ -79,7 +79,7 @@ To enforce corporate compliance, security standards, and cost control prior to d
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/your-username/terraform-aws-nginx-sentinel.git
+   git clone https://github.com/your-antr-bell/terraform-aws-nginx-sentinel.git
    cd terraform-aws-nginx-sentinel
    ```
 
@@ -108,3 +108,16 @@ To enforce corporate compliance, security standards, and cost control prior to d
 * **Cloud-Init Execution Lifecycle**: Debugged and resolved instance bootstrap dependency issues where `user_data` required active outbound Internet Gateway routing to pull packages via `dnf`.
 * **State Management & Drift Control**: Leveraged HCP Terraform remote state management to decouple local development environments from state storage.
 * **Shift-Left Security**: Enforced compliance policy checks early in the CI/CD pipeline before cloud resource allocation occurs.
+
+## Verification & Proof of Execution
+
+To validate that this infrastructure was fully provisioned, governed, and tested, below are execution artifacts from the HCP Terraform pipeline:
+
+### 1. Sentinel Compliance Checks Passing
+![Sentinel Policy Pass](assets/hcp-sentinel-pass.png)
+
+### 2. Live Web Server Verification
+![Curl Execution Proof](assets/curl-verification.png)
+
+### 3. Proactive Policy Enforcement (Port 22 Block)
+![Sentinel Policy Failure](assets/sentinel-fail-test.png)

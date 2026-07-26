@@ -5,10 +5,11 @@ resource "aws_instance" "web_server" {
   vpc_security_group_ids      = [aws_security_group.web_sg.id]
   associate_public_ip_address = true
 
-  user_data = <<-EOF
+user_data = <<-EOF
               #!/bin/bash
               dnf update -y
               dnf install -y nginx
+              echo "<h1>Deployed by antr-bell via HCP Terraform & Sentinel</h1>" > /usr/share/nginx/html/index.html
               systemctl start nginx
               systemctl enable nginx
               EOF
