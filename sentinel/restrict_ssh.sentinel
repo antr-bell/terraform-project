@@ -1,0 +1,21 @@
+import "tfplan/v2" as tfplan
+
+# Filter for security group ingress rules being created or updated
+sg_ingress_rules = filter tfplan.resource_changes as _, rc {
+  rc.type is "aws_vpc_security_group_ingress_rule" and
+  (rc.change.actions contains "create" or rc.change.actions contains "update")
+}
+
+# Rule: Deny Port 22 from 0.0.0.0/0
+no_open_ssh = rule {
+  all sg_ingress_rules as _, rule {
+    not (
+      rule.change.after.from_port == 22 and 
+      rule.change.after.cidr_ipv4 == "0.0.0.0/0"
+    )
+  }
+}
+
+main = rule {
+  no_open_ssh
+}
