@@ -1,23 +1,19 @@
-# Fetch latest Amazon Linux 2023 AMI dynamically
-data "aws_ami" "amazon_linux" {
-  most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = ["al2023-ami-2023.*-x86_64"]
-  }
-}
-
 resource "aws_instance" "web_server" {
-  ami                    = data.aws_ami.amazon_linux.id
-  instance_type          = "t3.micro"
-  subnet_id              = aws_subnet.public.id
-  vpc_security_group_ids = [aws_security_group.web_sg.id]
+  ami                         = "ami-0c101f26f147fa7fd" # Amazon Linux 2023 (or your AMI var)
+  instance_type               = "t3.micro"
+  subnet_id                   = aws_subnet.public.id
+  vpc_security_group_ids      = [aws_security_group.web_sg.id]
+  associate_public_ip_address = true
 
-  # Tested by our enforce_tags.sentinel policy
+  user_data = <<-EOF
+              #!/bin/bash
+              dnf update -y
+              dnf install -y nginx
+              systemctl start nginx
+              systemctl enable nginx
+              EOF
+
   tags = {
-    Name        = "${var.environment}-web-server"
-    Environment = var.environment
+    Name = "dev-web-server"
   }
 }
