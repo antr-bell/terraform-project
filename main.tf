@@ -1,7 +1,6 @@
 terraform {
   required_version = ">= 1.5.0"
 
-  # Link to your HCP Terraform Organization & Workspace
   cloud {
     organization = "tray-cloud-portfolio"
 
